@@ -1,40 +1,36 @@
 Are You Bored Yet?
-A.	Boredom Score Definition: 
- The used features are:
-1.	performance drop norm – Sudden decline in recent performance is indicative of loss of engagement.
-2.	unrewarded streak norm – Long sequences of unrewarded trials can increase frustration or disengagement.
-3.	reaction time drift_norm – Gradual increase in reaction time across trials may reflect cognitive fatigue or loss of attention.
-4.	 choice switch rate_norm – High switching frequency could reflect indecisiveness or erratic behavior.
-5.	 reaction time norm – High reaction time could be associated with low motivation or attention.
-To move beyond the heuristic and obtain a data-driven definition, I aimed to find the optimal weights for the 5 features such that the resulting boredom score correlates most strongly with it through Bayesian optimization. The weights were normalized to sum to 1. 
-After optimization, the final boredom score was defined as a weighted linear combination of the five behavioral components:
-boredom_score = ( 0.101 * reaction_time_norm +
-                               0.108 * choice_switch_rate_norm + 
-                               0.264 * unrewarded_streak_norm + 
-                               0.264 * performance_drop_norm + 
-                               0.264 * reaction_time_drift_norm)
+A. Defining the Boredom Score
+The boredom score was developed using five behavioral indicators:
+Performance Drop Norm: A sudden decline in recent performance suggests decreased engagement.
+Unrewarded Streak Norm: Extended sequences without rewards may lead to frustration or disengagement.
+Reaction Time Drift Norm: A gradual increase in reaction times over trials can indicate cognitive fatigue or waning attention.
+Choice Switch Rate Norm: Frequent switching between choices might reflect indecisiveness or erratic behavior.
+Reaction Time Norm: Elevated reaction times could be linked to reduced motivation or attention.
+To move beyond heuristic methods, Bayesian optimization was employed to determine the optimal weights for these features, ensuring they sum to 1. The final boredom score is a weighted linear combination:
+Boredom Score = (0.101 × Reaction Time Norm) + (0.108 × Choice Switch Rate Norm) + (0.264 × Unrewarded Streak Norm) + (0.264 × Performance Drop Norm) + (0.264 × Reaction Time Drift Norm)
+Higher scores indicate patterns of disengagement or demotivation.
 
-Higher boredom scores indicate behavioral patterns where the animal is disengaged or demotivated.
+B. Utilizing Behavioral Proxies
+In behavioral sciences, it's common to infer internal states through observable behaviors, especially when direct reporting isn't possible—as with mice. The following features were considered:
+Reaction Time
+Stimulus Contrast
+Trial Delay
+Choice Switch
+Unrewarded Streak
+Performance
+First Movement Delay
+Quiescence
 
-2.	 Why certain behaviors were treated as proxies
-It is a common strategy in behavioral sciences where a model is built or a score is calculated based upon multiple observable proxies where internal states cannot be objectively measured. Since mice cannot self-report their feelings, we rely on behavioral changes that may correlate with disengagement. While predicting boredom scores, I considered the following features:
-reaction_time, stimulus_constrast, trial_delay, choice_switch, unrewarded_streak, performance, first_movement_delay, quiescence; some of which I took up as they were in the dataset while some were engineered such as the reaction time.
+Some of these were directly available in the dataset, while others, like reaction time, were derived. These proxies help estimate levels of engagement or boredom.
 
-3.	Observed patterns across sessions and animals
-
-Distribution of Boredom Score Over Trials
- 
-The following patterns can be observed:
-•	Early Decline: Boredom is relatively high at the start of sessions and decreases rapidly, possibly reflecting adaptation or excitement.
-•	Cyclical Patterns: Boredom exhibits recurrent fluctuations across trials, with periodic rises and dips.
-o	These may correspond to behavioral shifts such as reduced reward, strategy changes, or fatigue.
-•	Late-session Drift: A gradual increase in boredom toward session end is observed in several sessions, possibly indicating reduced motivation.
-
-Analysis of the computed boredom scores across all trials reveals a right-skewed distribution, with most values clustered around 0.2 on a normalized 0–1 scale.
-•	Key Observations:
-o	Low to moderate boredom is the most prevalent state.
-o	High boredom scores (> 0.6) are relatively rare, suggesting transient episodes of disengagement or fatigue.
-o	This skew supports the idea that animals were generally engaged but experienced occasional lapses.
-.
+C. Patterns Observed Across Sessions and Animals
+Analysis of boredom scores across trials revealed:
+Early Decline: High boredom at session starts that decreases rapidly, possibly due to adaptation or initial excitement.
+Cyclical Patterns: Recurrent fluctuations in boredom, potentially linked to changes in behavior, reward patterns, or fatigue.
+Late-Session Drift: A gradual increase in boredom towards session ends, indicating reduced motivation.
+The distribution of boredom scores is right-skewed, with most values around 0.2 on a normalized 0–1 scale. Key observations include:
+Predominance of low to moderate boredom levels.
+High boredom scores (>0.6) are rare, suggesting occasional disengagement episodes.
+Overall, animals remained generally engaged with occasional lapses.
 
 
